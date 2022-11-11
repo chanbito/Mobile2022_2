@@ -1,4 +1,4 @@
-package com.example.mobile2022_2;
+package com.example.mobile2022_2.view;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mobile2022_2.R;
 import com.example.mobile2022_2.databinding.ActivityMainBinding;
 
 import android.view.Menu;
