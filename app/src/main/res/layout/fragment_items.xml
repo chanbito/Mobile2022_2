@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.FirstFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="lista do zaffari 21/12"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/FinalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="final" />
+
+            <Button
+                android:id="@+id/OcultarMarcadosButton"
+                android:layout_width="235dp"
+                android:layout_height="wrap_content"
+                android:text="ocult.  marc"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/AddButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/finalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="final" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="409dp"
+            android:layout_height="654dp" >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
