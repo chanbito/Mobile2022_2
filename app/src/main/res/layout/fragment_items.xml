@@ -54,7 +54,8 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="409dp"
-            android:layout_height="654dp" >
+            android:layout_height="654dp"
+            tools:listitem="@layout/layout_item_vh" >
 
         </android.support.v7.widget.RecyclerView>
 

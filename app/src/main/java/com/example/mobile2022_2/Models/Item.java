@@ -10,7 +10,7 @@ public class Item implements Parcelable {
     private String medida;
     private Produto produto;
 
-    public Item(int id, int id_lista, boolean ativo, String medida, Produto produto) {
+    public Item(int id, boolean ativo, String medida, Produto produto,int id_lista) {
         this.id = id;
         this.id_lista = id_lista;
         this.ativo = ativo;
@@ -21,6 +21,7 @@ public class Item implements Parcelable {
     protected Item(Parcel in) {
         id = in.readInt();
         id_lista = in.readInt();
+
         ativo = in.readByte() != 0;
         medida = in.readString();
         produto = in.readParcelable(Produto.class.getClassLoader());
@@ -62,13 +63,7 @@ public class Item implements Parcelable {
         this.ativo = ativo;
     }
 
-    public int getId_lista() {
-        return id_lista;
-    }
-
-    public void setId_lista(int id_lista) {
-        this.id_lista = id_lista;
-    }
+    public boolean getAtivo() {return this.ativo;}
 
     public int getId() {
         return id;
@@ -90,5 +85,13 @@ public class Item implements Parcelable {
         parcel.writeByte((byte) (ativo ? 1 : 0));
         parcel.writeString(medida);
         parcel.writeParcelable(produto, i);
+    }
+
+    public int getId_lista() {
+        return id_lista;
+    }
+
+    public void setId_lista(int id_lista) {
+        this.id_lista = id_lista;
     }
 }

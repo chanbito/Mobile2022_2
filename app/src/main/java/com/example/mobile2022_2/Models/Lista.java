@@ -28,6 +28,26 @@ public class Lista implements Parcelable {
         items = in.createTypedArrayList(Item.CREATOR);
     }
 
+    public int GetItensUnchecked(){
+        int ret = 0;
+        if(this.items == null){
+            return ret;
+        }
+        for (Item it :
+                this.items) {
+            if(!it.getAtivo())
+                ret++;
+        }
+        return ret;
+    }
+
+    public int GetItensSize(){
+        if(items == null){
+            return 0;
+        }
+        return items.size();
+    }
+
     public static final Creator<Lista> CREATOR = new Creator<Lista>() {
         @Override
         public Lista createFromParcel(Parcel in) {

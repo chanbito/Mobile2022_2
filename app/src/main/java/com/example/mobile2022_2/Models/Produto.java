@@ -6,11 +6,11 @@ import android.os.Parcelable;
 public class Produto implements Parcelable {
     private int id;
     private String desc;
-    private float valor_ult;
+    private double valor_ult;
     private boolean ativo;
     private Categoria categoria;
 
-    public Produto(int id, String desc, float valor_ult, boolean ativo, Categoria categoria) {
+    public Produto(int id, String desc, double valor_ult, boolean ativo, Categoria categoria) {
         this.id = id;
         this.desc = desc;
         this.valor_ult = valor_ult;
@@ -21,7 +21,7 @@ public class Produto implements Parcelable {
     protected Produto(Parcel in) {
         id = in.readInt();
         desc = in.readString();
-        valor_ult = in.readFloat();
+        valor_ult = in.readDouble();
         ativo = in.readByte() != 0;
         categoria = in.readParcelable(Categoria.class.getClassLoader());
     }
@@ -38,7 +38,7 @@ public class Produto implements Parcelable {
         }
     };
 
-    public float getValor_ult() {
+    public double getValor_ult() {
         return valor_ult;
     }
 
@@ -87,7 +87,7 @@ public class Produto implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(desc);
-        parcel.writeFloat(valor_ult);
+        parcel.writeDouble(valor_ult);
         parcel.writeByte((byte) (ativo ? 1 : 0));
         parcel.writeParcelable(categoria, i);
     }
