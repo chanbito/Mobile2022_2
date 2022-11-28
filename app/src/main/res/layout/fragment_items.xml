@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/titulotextView"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:text="lista do zaffari 21/12"
@@ -26,15 +26,16 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/FinalButton"
+                android:id="@+id/editarButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="final" />
+                android:text="Editar" />
 
             <Button
                 android:id="@+id/OcultarMarcadosButton"
                 android:layout_width="235dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="20"
                 android:text="ocult.  marc"
                 android:textAlignment="center" />
 
@@ -53,9 +54,10 @@
             android:text="final" />
 
         <android.support.v7.widget.RecyclerView
-            android:layout_width="409dp"
+            android:id="@+id/RCItem"
+            android:layout_width="match_parent"
             android:layout_height="654dp"
-            tools:listitem="@layout/layout_item_vh" >
+            tools:listitem="@layout/layout_item_vh">
 
         </android.support.v7.widget.RecyclerView>
 

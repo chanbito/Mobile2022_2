@@ -20,11 +20,11 @@ public class ItemRepository {
         this.context = context;
         Itens = new ArrayList<>();
         ProdutoRepository produtoRepository = ProdutoRepository.getInstance(this.context);
-        Itens.add(new Item(1, true,"UN",produtoRepository.getProdutobyid(1),1));
-        Itens.add(new Item(2, true,"UN",produtoRepository.getProdutobyid(3),1));
-        Itens.add(new Item(3, true,"L",produtoRepository.getProdutobyid(1),1));
-        Itens.add(new Item(4, true,"MG",produtoRepository.getProdutobyid(2),1));
-        Itens.add(new Item(5, false,"KG",produtoRepository.getProdutobyid(5),1));
+        Itens.add(new Item(1, true,"UN",produtoRepository.getProdutobyid(1),1, 1));
+        Itens.add(new Item(2, true,"UN",produtoRepository.getProdutobyid(3),1,1));
+        Itens.add(new Item(3, true,"L",produtoRepository.getProdutobyid(1),1, 3));
+        Itens.add(new Item(4, true,"MG",produtoRepository.getProdutobyid(2),1, 500));
+        Itens.add(new Item(5, false,"KG",produtoRepository.getProdutobyid(5),1, 5));
     }
 
     public static ItemRepository getInstance(Context contexto) {

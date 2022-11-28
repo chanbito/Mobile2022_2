@@ -4,26 +4,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Item implements Parcelable {
+    private int quantidade;
     private int id;
     private int id_lista;
     private boolean ativo;
     private String medida;
     private Produto produto;
 
-    public Item(int id, boolean ativo, String medida, Produto produto,int id_lista) {
+    public Item(int id, boolean ativo, String medida, Produto produto,int id_lista, int qtd) {
         this.id = id;
         this.id_lista = id_lista;
         this.ativo = ativo;
         this.medida = medida;
         this.produto = produto;
+        this.quantidade = qtd;
     }
 
     protected Item(Parcel in) {
         id = in.readInt();
         id_lista = in.readInt();
-
         ativo = in.readByte() != 0;
         medida = in.readString();
+        quantidade = in.readInt();
         produto = in.readParcelable(Produto.class.getClassLoader());
     }
 
@@ -73,6 +75,14 @@ public class Item implements Parcelable {
         this.id = id;
     }
 
+    public int getquantidade() {
+        return quantidade;
+    }
+
+    public void setquantidade(int qtd) {
+        this.quantidade = qtd;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -84,6 +94,7 @@ public class Item implements Parcelable {
         parcel.writeInt(id_lista);
         parcel.writeByte((byte) (ativo ? 1 : 0));
         parcel.writeString(medida);
+        parcel.writeInt(quantidade);
         parcel.writeParcelable(produto, i);
     }
 

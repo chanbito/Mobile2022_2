@@ -55,8 +55,11 @@ public class ListFragment extends Fragment {
         binding.NovoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //https://developer.android.com/guide/navigation/navigation-pass-data
+                Bundle bundle = new Bundle();
+                //bundle.putString("amount", amount);
                 NavHostFragment.findNavController(ListFragment.this)
-                        .navigate(R.id.action_ListFragment_to_ItemFragment);
+                        .navigate(R.id.action_ListFragment_to_ItemFragment, bundle);
             }
         });
     }

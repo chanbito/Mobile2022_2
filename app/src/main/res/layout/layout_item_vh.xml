@@ -15,38 +15,29 @@
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
-            android:id="@+id/tituloTextView"
-            android:layout_width="0dp"
+            android:id="@+id/QTDtextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
+            android:layout_weight="8"
             android:text="500"
             android:textAlignment="center"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/CheckedTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="25dp" />
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/checkedTextView"
-            android:layout_width="0dp"
+            android:id="@+id/UnidadeTextView"
+            android:layout_width="4dp"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:text="kg"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/BarraTextView"
-            tools:layout_editor_absoluteY="25dp" />
+            android:layout_weight="8"
+            android:text="KG"
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/barraTextView"
+            android:id="@+id/produtotextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="Feijão"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/TotalTextView"
-            tools:layout_editor_absoluteY="25dp" />
+            android:text="TextView"
+            android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/checkBox"
