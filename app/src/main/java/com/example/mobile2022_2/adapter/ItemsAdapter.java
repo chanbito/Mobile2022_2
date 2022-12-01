@@ -30,19 +30,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         View layoutVH = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_item_vh,
                         viewGroup,false);
-        return new ListViewHolder(layoutVH);
+        return new ItemViewHolder(layoutVH);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         Item obj = ItemList.get(i);
-        Log.e(TAG,obj.getMedida());
+        if(obj == null){
+            return;
+        }
         TextView tv1 = viewHolder.itemView.findViewById(R.id.QTDtextView);
         TextView tv2 = viewHolder.itemView.findViewById(R.id.UnidadeTextView);
         TextView tv3 = viewHolder.itemView.findViewById(R.id.produtotextView);
-        tv1.setText(obj.getquantidade());
+        tv1.setText(""+obj.getquantidade());
         tv2.setText(obj.getMedida());
-        tv3.setText(obj.getProduto().getDesc());
+        tv3.setText(""+obj.getProduto().getDesc());
         ((CheckBox) viewHolder.itemView.findViewById(R.id.checkBox)).setChecked(obj.getAtivo());
     }
 

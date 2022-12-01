@@ -15,15 +15,19 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.mobile2022_2.Models.Lista;
 import com.example.mobile2022_2.R;
 import com.example.mobile2022_2.Repository.ListaRepository;
+import com.example.mobile2022_2.adapter.ClickItemListener;
 import com.example.mobile2022_2.adapter.ListAdapter;
 import com.example.mobile2022_2.databinding.FragmentFirstBinding;
 import com.example.mobile2022_2.databinding.FragmentListBinding;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
 public class ListFragment extends Fragment {
     private final String TAG = "ListFragment";
+    public Lista Selecionado;
 
     private FragmentListBinding binding;
 
@@ -46,21 +50,30 @@ public class ListFragment extends Fragment {
         RecyclerView rc = view.findViewById(R.id.RCLista);
         List<Lista> param = repo.getListas();
         Log.e(TAG,"Liastas: " + param.size());
-        ListAdapter ad = new ListAdapter(param);
+        ListAdapter ad = new ListAdapter(param, ListFragment.this);
 
         rc.setAdapter(ad);
         LinearLayoutManager llm  = new LinearLayoutManager(this.getContext());
         rc.setLayoutManager(llm);
 
-        binding.NovoButton.setOnClickListener(new View.OnClickListener() {
+        binding.NovoButton.setOnClickListener(
+                new ClickItemListener(
+                        new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null),
+                        ListFragment.this)
+                /*new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //https://developer.android.com/guide/navigation/navigation-pass-data
                 Bundle bundle = new Bundle();
-                //bundle.putString("amount", amount);
+                bundle.putParcelable("Lista", new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null));
                 NavHostFragment.findNavController(ListFragment.this)
-                        .navigate(R.id.action_ListFragment_to_ItemFragment, bundle);
+                        .navigate(R.id.action_ListFragment_to_ItemFragment, bundle); //
             }
-        });
+        }*/);
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

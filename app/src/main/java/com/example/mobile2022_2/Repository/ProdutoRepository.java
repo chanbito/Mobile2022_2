@@ -24,6 +24,7 @@ public class ProdutoRepository {
         produtos.add(new Produto(2,"pedra", 10,true,catrepo.getCatsbyid(1)));
         produtos.add(new Produto(3,"flor", 2.50,true,catrepo.getCatsbyid(3)));
         produtos.add(new Produto(4,"couve", 1.99,true,catrepo.getCatsbyid(4)));
+        produtos.add(new Produto(5,"couve", 1.99,true,catrepo.getCatsbyid(4)));
     }
 
     public static ProdutoRepository getInstance(Context cont) {
