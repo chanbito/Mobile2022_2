@@ -34,13 +34,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-48" />
-                            <option name="y" value="-78" />
+                            <option name="x" value="-69" />
+                            <option name="y" value="-124" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_FirstFragment_to_SecondFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_Item_Fragment_to_itemcadastroFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -76,8 +81,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-192" />
-                            <option name="y" value="366" />
+                            <option name="x" value="-243" />
+                            <option name="y" value="237" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -88,6 +93,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="itemcadastroFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-38" />
+                            <option name="y" value="241" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

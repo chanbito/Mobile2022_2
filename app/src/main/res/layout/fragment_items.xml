@@ -26,17 +26,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/editarButton"
+                android:id="@+id/OcultarMarcadosButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar" />
-
-            <Button
-                android:id="@+id/OcultarMarcadosButton"
-                android:layout_width="235dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="20"
-                android:text="ocult.  marc"
+                android:text="@string/Ocultar_Marcado"
                 android:textAlignment="center" />
 
             <Button

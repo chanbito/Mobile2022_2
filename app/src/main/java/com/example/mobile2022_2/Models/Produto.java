@@ -10,6 +10,7 @@ public class Produto implements Parcelable {
     private boolean ativo;
     private Categoria categoria;
 
+
     public Produto(int id, String desc, double valor_ult, boolean ativo, Categoria categoria) {
         this.id = id;
         this.desc = desc;

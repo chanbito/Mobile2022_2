@@ -2,6 +2,7 @@ package com.example.mobile2022_2.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Item implements Parcelable {
     private int quantidade;
@@ -57,11 +58,8 @@ public class Item implements Parcelable {
         this.medida = medida;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
     public void setAtivo(boolean ativo) {
+        Log.e("item","setAtivo " + ativo);
         this.ativo = ativo;
     }
 

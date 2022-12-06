@@ -60,16 +60,8 @@ public class ListFragment extends Fragment {
                 new ClickItemListener(
                         new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null),
                         ListFragment.this)
-                /*new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //https://developer.android.com/guide/navigation/navigation-pass-data
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("Lista", new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null));
-                NavHostFragment.findNavController(ListFragment.this)
-                        .navigate(R.id.action_ListFragment_to_ItemFragment, bundle); //
-            }
-        }*/);
+
+             );
     }
     @Override
     public void onDestroyView() {
