@@ -21,7 +21,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="20"
-                android:queryHint="Nome Produto">
+                android:queryHint="Nome Produto"
+                >
 
             </SearchView>
 
@@ -44,7 +45,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/DescTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -67,19 +68,23 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="20"
-                android:text="Quantidade:"
+                android:layout_marginTop="10sp"
+                android:layout_weight="22"
+                android:lineSpacingExtra="14sp"
+                android:text="Quantidade :"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTextNumber"
+                android:id="@+id/QTDeditTextNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -103,7 +108,7 @@
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/MetricaSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="34" />
@@ -111,7 +116,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="166dp" />
+            android:layout_height="96dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

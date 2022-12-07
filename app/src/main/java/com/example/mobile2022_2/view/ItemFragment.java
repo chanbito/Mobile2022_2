@@ -28,9 +28,9 @@ import java.util.List;
 
 public class ItemFragment extends Fragment {
     private final String TAG = "ItemFragment";
-    public Lista Selecionado;
+    public static Lista Selecionado;
     public static boolean OcultarAtivo;
-    public static List<Item> ListaFinal;
+    public List<Item> ListaFinal;
 
     private FragmentItemsBinding binding;
 
@@ -54,7 +54,9 @@ public class ItemFragment extends Fragment {
         OcultarAtivo = false;
 
         try {
-            Selecionado = getArguments().getParcelable("Lista");
+            if(Selecionado == null){
+                 Selecionado = getArguments().getParcelable("Lista");
+            }
             Log.e(TAG, Selecionado.getDesc());
             ID_LISTA = Selecionado.getId();
             nome_lista = Selecionado.getDesc();
@@ -65,9 +67,11 @@ public class ItemFragment extends Fragment {
         RecyclerView rc = view.findViewById(R.id.RCItem);
 
         TextView tv1 =view.findViewById(R.id.titulotextView);
-        Log.e(TAG,"Liastas: " + (tv1 == null));
+
         if(ID_LISTA >= 0){
-            ListaFinal = repo.getItembyList(ID_LISTA);
+            if(ListaFinal == null){
+                ListaFinal = repo.getItembyList(ID_LISTA);
+            }
             tv1.setText(nome_lista);
         }else{
             tv1.setText("Nova Lista");

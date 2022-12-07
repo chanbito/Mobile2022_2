@@ -13,4 +13,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string-array name="MetricasArray">
+        <item>UN</item>
+        <item>Grm</item>
+        <item>Kg</item>
+        <item>Ml</item>
+        <item>Li</item>
+    </string-array>
+
+
 </resources>

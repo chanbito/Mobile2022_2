@@ -52,6 +52,11 @@
     <fragment
         android:id="@+id/itemcadastroFragment"
         android:name="com.example.mobile2022_2.view.ItemcadastroFragment"
-        android:label="ItemcadastroFragment" />
+        android:label="ItemcadastroFragment"
+        tools:layout="@layout/fragment_item_cadastro">
+        <action
+            android:id="@+id/action_itemcadastroFragment_to_Item_Fragment"
+            app:destination="@id/Item_Fragment" />
+    </fragment>
 
 </navigation>

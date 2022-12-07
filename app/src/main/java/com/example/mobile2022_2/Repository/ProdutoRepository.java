@@ -6,6 +6,7 @@ import com.example.mobile2022_2.Models.Lista;
 import com.example.mobile2022_2.Models.Produto;
 import com.example.mobile2022_2.Models.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class ProdutoRepository {
     }
 
     public List<Produto> getProdutos() {
-
         return produtos;
     }
 
