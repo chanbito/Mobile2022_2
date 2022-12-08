@@ -27,6 +27,7 @@ import com.example.mobile2022_2.Models.Produto;
 import com.example.mobile2022_2.R;
 import com.example.mobile2022_2.Repository.ItemRepository;
 import com.example.mobile2022_2.Repository.ProdutoRepository;
+import com.example.mobile2022_2.adapter.ClickItemListener;
 import com.example.mobile2022_2.databinding.FragmentItemCadastroBinding;
 
 import java.util.ArrayList;
@@ -150,8 +151,15 @@ public class ItemcadastroFragment extends Fragment {
                 }
             }
         });
-        binding.CancelarButton.setOnClickListener(view1 -> NavHostFragment.findNavController(ItemcadastroFragment.this)
-                .navigate(R.id.action_itemcadastroFragment_to_Item_Fragment));
+        binding.CancelarButton.setOnClickListener(
+                new ClickItemListener(
+                        ItemFragment.ListaSelecionada,
+                        ItemcadastroFragment.this) //new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null
+
+                );
+
+                //view1 -> NavHostFragment.findNavController(ItemcadastroFragment.this)
+                //.navigate(R.id.action_itemcadastroFragment_to_Item_Fragment));
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ItemcadastroFragment.this.getContext(),
                 R.array.MetricasArray, android.R.layout.simple_spinner_item);
@@ -170,10 +178,16 @@ public class ItemcadastroFragment extends Fragment {
                 irep.addItem(binding.MetricaSpinner.getSelectedItem().toString(),produtoSelecionado.getId(),
                         ItemFragment.ListaSelecionada.getId(),Integer.parseInt(binding.QTDeditTextNumber.getText().toString()));
 
+
+                new ClickItemListener(
+                        ItemFragment.ListaSelecionada,
+                        ItemcadastroFragment.this //new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null
+                );
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Lista", ItemFragment.ListaSelecionada);
                 NavHostFragment.findNavController(ItemcadastroFragment.this)
-                        .navigate(R.id.action_itemcadastroFragment_to_Item_Fragment);
-
-
+                        .navigate(R.id.action_ListFragment_to_ItemFragment, bundle);
             }
         });
     }

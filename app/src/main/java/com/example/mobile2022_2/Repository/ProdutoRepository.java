@@ -2,11 +2,8 @@ package com.example.mobile2022_2.Repository;
 
 import android.content.Context;
 
-import com.example.mobile2022_2.Models.Lista;
 import com.example.mobile2022_2.Models.Produto;
-import com.example.mobile2022_2.Models.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

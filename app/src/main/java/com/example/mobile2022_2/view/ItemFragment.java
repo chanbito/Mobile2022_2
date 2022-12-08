@@ -58,7 +58,12 @@ public class ItemFragment extends Fragment {
         OcultarAtivo = false;
 
         try {
-            ListaSelecionada = getArguments().getParcelable("Lista");
+            Log.e(TAG,"getArgs: " + getArguments());
+            Log.e(TAG,"OLHA AQUI O BUG Q TU N ARRUMOU");
+            if(!getArguments().isEmpty()){
+                Log.e(TAG,"getArgs: " + getArguments());
+                ListaSelecionada = getArguments().getParcelable("Lista");
+            }
         }catch (Exception e){
             if(ListaSelecionada != null){
                 ListaSelecionada = new Lista(-1,"Nova Lista", Calendar.getInstance().getTime(),true,null);
@@ -133,8 +138,9 @@ public class ItemFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int id) {
                                     ListaRepository lrep = new ListaRepository(ItemFragment.this.getContext());
                                     lrep.updateLista(ListaSelecionada);
-                                    NavHostFragment.findNavController(ItemFragment.this)
-                                            .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
+                                    //NavHostFragment.findNavController(ItemFragment.this)
+                                      //      .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
+                                    SetListEditMode(false);
                                 }
                             })
                             .setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -143,6 +149,8 @@ public class ItemFragment extends Fragment {
                                 }
                             });
                     builder.create().show();
+                }else{
+                    SetListEditMode(true);
                 }
             }
         });
@@ -169,6 +177,10 @@ public class ItemFragment extends Fragment {
                                     }
                                 }
                                 ListaSelecionada.setAtivo(false);
+                                NavHostFragment.findNavController(ItemFragment.this).navigate(
+                                        R.id.action_Item_Fragment_to_ListFragment
+                                );
+
                             }
                         })
                         .setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -179,6 +191,9 @@ public class ItemFragment extends Fragment {
                 builder.create().show();
             }else{
                 ListaSelecionada.setAtivo(false);
+                NavHostFragment.findNavController(ItemFragment.this).navigate(
+                        R.id.action_Item_Fragment_to_ListFragment
+                );
             }
 
         });
