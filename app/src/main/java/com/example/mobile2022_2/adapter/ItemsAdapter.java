@@ -81,7 +81,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             @Override
             public void onClick(View view) {
                 boolean b = ((CheckBox)view).isChecked();
-                ItemList.get(i).setAtivo(b);
+                obj.setAtivo(b);
                 Log.e(TAG,"setando: " + obj.getProduto().getDesc());
                 Log.e(TAG,"b: " + b);
                 Log.e(TAG,"setando: " + obj.getAtivo());

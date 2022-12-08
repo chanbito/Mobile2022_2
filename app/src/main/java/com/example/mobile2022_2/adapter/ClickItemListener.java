@@ -24,9 +24,15 @@ public class ClickItemListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         //https://developer.android.com/guide/navigation/navigation-pass-data
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Lista", Lista_param);
-        NavHostFragment.findNavController(frag_origem)
-                .navigate(R.id.action_ListFragment_to_ItemFragment, bundle);
+        if(Lista_param != null){
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("Lista", Lista_param);
+            NavHostFragment.findNavController(frag_origem)
+                    .navigate(R.id.action_ListFragment_to_ItemFragment, bundle);
+        }else{
+            NavHostFragment.findNavController(frag_origem)
+                    .navigate(R.id.action_ListFragment_to_ItemFragment);
+        }
+
     }
 }

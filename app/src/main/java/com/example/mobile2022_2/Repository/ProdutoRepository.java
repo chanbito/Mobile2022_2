@@ -19,13 +19,13 @@ public class ProdutoRepository {
     public ProdutoRepository(Context context) {
         super();
         this.context = context;
-        CategoriaRepository catrepo = CategoriaRepository.getInstance(this.context);
         produtos = new ArrayList<>();
-        produtos.add(new Produto(1,"Arroz", 25,true,catrepo.getCatsbyid(1)));
-        produtos.add(new Produto(2,"pedra", 10,true,catrepo.getCatsbyid(1)));
-        produtos.add(new Produto(3,"flor", 2.50,true,catrepo.getCatsbyid(3)));
-        produtos.add(new Produto(4,"couve", 1.99,true,catrepo.getCatsbyid(4)));
-        produtos.add(new Produto(5,"couve", 1.99,true,catrepo.getCatsbyid(4)));
+        produtos.add(new Produto(1,"Arroz", 25,true));
+        produtos.add(new Produto(2,"pedra", 10,true));
+        produtos.add(new Produto(3,"flor", 2.50,true));
+        produtos.add(new Produto(4,"couve", 1.99,true));
+        produtos.add(new Produto(5,"couve", 1.99,true));
+
     }
 
     public static ProdutoRepository getInstance(Context cont) {
@@ -47,5 +47,11 @@ public class ProdutoRepository {
             }
         }
         return null;
+    }
+
+    public Produto CreateProduto(String s){
+        Produto p = new Produto(produtos.size() + 1, s, 0,true);
+        produtos.add(p);
+        return p;
     }
 }

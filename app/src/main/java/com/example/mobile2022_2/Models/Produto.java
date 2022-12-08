@@ -8,15 +8,13 @@ public class Produto implements Parcelable {
     private String desc;
     private double valor_ult;
     private boolean ativo;
-    private Categoria categoria;
 
 
-    public Produto(int id, String desc, double valor_ult, boolean ativo, Categoria categoria) {
+    public Produto(int id, String desc, double valor_ult, boolean ativo) {
         this.id = id;
         this.desc = desc;
         this.valor_ult = valor_ult;
         this.ativo = ativo;
-        this.categoria = categoria;
     }
 
     protected Produto(Parcel in) {
@@ -24,7 +22,6 @@ public class Produto implements Parcelable {
         desc = in.readString();
         valor_ult = in.readDouble();
         ativo = in.readByte() != 0;
-        categoria = in.readParcelable(Categoria.class.getClassLoader());
     }
 
     public static final Creator<Produto> CREATOR = new Creator<Produto>() {
@@ -55,14 +52,6 @@ public class Produto implements Parcelable {
         this.ativo = ativo;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
     public String getDesc() {
         return desc;
     }
@@ -90,6 +79,5 @@ public class Produto implements Parcelable {
         parcel.writeString(desc);
         parcel.writeDouble(valor_ult);
         parcel.writeByte((byte) (ativo ? 1 : 0));
-        parcel.writeParcelable(categoria, i);
     }
 }

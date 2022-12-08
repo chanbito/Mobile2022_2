@@ -1,8 +1,9 @@
 package com.example.mobile2022_2.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,17 +19,21 @@ import com.example.mobile2022_2.Models.Item;
 import com.example.mobile2022_2.Models.Lista;
 import com.example.mobile2022_2.R;
 import com.example.mobile2022_2.Repository.ItemRepository;
+import com.example.mobile2022_2.Repository.ListaRepository;
 import com.example.mobile2022_2.Repository.ProdutoRepository;
 import com.example.mobile2022_2.adapter.ClickItemListener;
 import com.example.mobile2022_2.adapter.ItemsAdapter;
 import com.example.mobile2022_2.databinding.FragmentItemsBinding;
 
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class ItemFragment extends Fragment {
     private final String TAG = "ItemFragment";
-    public static Lista Selecionado;
+    public static Lista ListaSelecionada;
     public static boolean OcultarAtivo;
     public List<Item> ListaFinal;
 
@@ -49,88 +54,146 @@ public class ItemFragment extends Fragment {
         ProdutoRepository rep = ProdutoRepository.getInstance(this.getContext());
         ItemRepository repo = ItemRepository.getInstance(this.getContext());
 
-        int ID_LISTA = -1;
-        String  nome_lista = "Novo";
+
         OcultarAtivo = false;
 
         try {
-            if(Selecionado == null){
-                 Selecionado = getArguments().getParcelable("Lista");
-            }
-            Log.e(TAG, Selecionado.getDesc());
-            ID_LISTA = Selecionado.getId();
-            nome_lista = Selecionado.getDesc();
+            ListaSelecionada = getArguments().getParcelable("Lista");
         }catch (Exception e){
-
+            if(ListaSelecionada != null){
+                ListaSelecionada = new Lista(-1,"Nova Lista", Calendar.getInstance().getTime(),true,null);
+            }
         }
 
-        RecyclerView rc = view.findViewById(R.id.RCItem);
-
-        TextView tv1 =view.findViewById(R.id.titulotextView);
-
-        if(ID_LISTA >= 0){
+        if(ListaSelecionada.getId() >= 0){
             if(ListaFinal == null){
-                ListaFinal = repo.getItembyList(ID_LISTA);
+                ListaFinal = repo.getItembyList(ListaSelecionada.getId());
             }
-            tv1.setText(nome_lista);
+            binding.editTextListName.setText(ListaSelecionada.getDesc());
+            SetListEditMode(false);
+
         }else{
-            tv1.setText("Nova Lista");
+            binding.editTextListName.setText("Nova Lista");
+            SetListEditMode(true);
             ListaFinal = new ArrayList<>();
         }
 
         Log.e(TAG,"Liastas: " + ListaFinal.size());
 
 
+
         ItemsAdapter ad = new ItemsAdapter(ListaFinal);
-        rc.setAdapter(ad);
+        binding.RCItem.setAdapter(ad);
         LinearLayoutManager llm  = new LinearLayoutManager(this.getContext());
-        rc.setLayoutManager(llm);
+        binding.RCItem.setLayoutManager(llm);
 
-        binding.OcultarMarcadosButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                OcultarAtivo = !OcultarAtivo;
-                if(OcultarAtivo)
-                    binding.OcultarMarcadosButton.setText(R.string.Mostrar_Marcado);
-                else
-                    binding.OcultarMarcadosButton.setText(R.string.Ocultar_Marcado);
-                ad.filter(OcultarAtivo);
+        binding.OcultarMarcadosButton.setOnClickListener(view1 -> {
+            OcultarAtivo = !OcultarAtivo;
+            if(OcultarAtivo)
+                binding.OcultarMarcadosButton.setText(R.string.Mostrar_Marcado);
+            else
+                binding.OcultarMarcadosButton.setText(R.string.Ocultar_Marcado);
+            ad.filter(OcultarAtivo);
 
-            }
         });
 
-        binding.AddButton.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
+        binding.AddButton.setOnClickListener(view12 -> {
+            if(ListaSelecionada.getId() == -1)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Deseja Criar uma lista com o nome " + ListaSelecionada.getDesc() + " ?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                ListaRepository lrep = new ListaRepository(ItemFragment.this.getContext());
+                                lrep.addLista(ListaSelecionada);
+                                NavHostFragment.findNavController(ItemFragment.this)
+                                        .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                return;
+                            }
+                        });
+                builder.create().show();
+            }else{
                 NavHostFragment.findNavController(ItemFragment.this)
                         .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
             }
+
+        });
+
+        binding.EditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(binding.EditButton.getText() == "Save"){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Deseja Salvar a lista com o nome " + ListaSelecionada.getDesc() + " ?")
+                            .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    ListaRepository lrep = new ListaRepository(ItemFragment.this.getContext());
+                                    lrep.updateLista(ListaSelecionada);
+                                    NavHostFragment.findNavController(ItemFragment.this)
+                                            .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
+                                }
+                            })
+                            .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    return;
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        });
+
+        binding.finalButton.setOnClickListener(view13 -> {
+            int count = 0;
+            for (Item i :
+                    ListaFinal) {
+                if(!i.getAtivo()){
+                    count++;
+                }
+            }
+
+            if(count > 0){
+                //avisar que ainda tem itens não marcados e perguntar se quer fechar mesmo assim
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Há itens na lista ainda não recolhidos, realmente deseja continuar?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                for (Item i :
+                                        ListaFinal) {
+                                    if(!i.getAtivo()){
+                                        i.setAtivo(true);
+                                    }
+                                }
+                                ListaSelecionada.setAtivo(false);
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                return;
+                            }
+                        });
+                builder.create().show();
+            }else{
+                ListaSelecionada.setAtivo(false);
+            }
+
         });
     }
 
-    private void ActualizeRC(RecyclerView rc) {
-
-        List<Item> ListaFiltrada = new ArrayList<>();
-        for (Item item:
-                ListaFinal) {
-            if(OcultarAtivo){
-                if(item.getAtivo() == !OcultarAtivo) {
-                    Log.e(TAG,"ItemListchecked add uncheck ");
-                    ListaFiltrada.add(item);
-                }
-            }
-            else{
-                ListaFiltrada.add(item);
-            }
-        }
-
-        ItemsAdapter ad = new ItemsAdapter(ListaFiltrada);
-        rc.setAdapter(ad);
-
-        Log.e(TAG,"ListaFinal: " + ListaFinal.size());
-        Log.e(TAG,"ListaFiltrada: " + ListaFiltrada.size());
-        Log.e(TAG,"ad.getItemCount(): " + ad.getItemCount());
+    private void SetListEditMode(boolean mode) {
+        binding.editTextListName.setFocusable(mode);
+        binding.editTextListName.setFocusableInTouchMode(mode);
+        binding.editTextListName.setClickable(mode);
+        if(mode)
+            binding.EditButton.setText("Save");
+        else
+            binding.EditButton.setText("Edit");
     }
+
 
     @Override
     public void onDestroyView() {

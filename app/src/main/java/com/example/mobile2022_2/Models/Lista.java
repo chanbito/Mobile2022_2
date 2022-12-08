@@ -68,7 +68,7 @@ public class Lista implements Parcelable {
         this.items = items;
     }
 
-    public boolean isAtivo() {
+    public boolean getAtivo() {
         return ativo;
     }
 

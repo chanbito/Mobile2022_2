@@ -48,7 +48,9 @@ public class ListFragment extends Fragment {
         ListaRepository repo = ListaRepository.getInstance(this.getContext());
 
         RecyclerView rc = view.findViewById(R.id.RCLista);
-        List<Lista> param = repo.getListas();
+
+        List<Lista> param = repo.getListasAtivas();
+
         Log.e(TAG,"Liastas: " + param.size());
         ListAdapter ad = new ListAdapter(param, ListFragment.this);
 
@@ -58,8 +60,8 @@ public class ListFragment extends Fragment {
 
         binding.NovoButton.setOnClickListener(
                 new ClickItemListener(
-                        new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null),
-                        ListFragment.this)
+                        null,
+                        ListFragment.this) //new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null
 
              );
     }
