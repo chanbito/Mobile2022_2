@@ -1,5 +1,6 @@
 package com.example.mobile2022_2.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.mobile2022_2.Models.Item;
 import com.example.mobile2022_2.R;
+import com.example.mobile2022_2.Repository.ItemRepository;
 import com.example.mobile2022_2.view.ItemFragment;
 
 import java.util.ArrayList;
@@ -21,11 +23,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final String TAG = "ItemsAdapter";
     private List<Item> ItemListFilter;
     private final List<Item> ItemList;
+    private ItemRepository repo;
 
-    public ItemsAdapter(List<Item> ItemList) {
+    public ItemsAdapter(List<Item> ItemList, Context context) {
         this.ItemListFilter = new ArrayList<>();
         this.ItemListFilter.addAll(ItemList);
         this.ItemList = ItemList;
+        repo = new ItemRepository(context);
+
     }
 
     public void ItemListUnchecked(List<Item> _ItemList){
@@ -39,6 +44,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         for (Item item:
                 ItemList) {
             if(onlyUnchecked){
+                if(item != null)
                 if(!item.getAtivo()) {
                     Log.e(TAG,"ItemListchecked add uncheck ");
                     Log.e(TAG,"Item " + item.getProduto().getDesc() + " ativo " + item.getAtivo());
@@ -82,6 +88,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(View view) {
                 boolean b = ((CheckBox)view).isChecked();
                 obj.setAtivo(b);
+                repo.updateItem(obj);
                 Log.e(TAG,"setando: " + obj.getProduto().getDesc());
                 Log.e(TAG,"b: " + b);
                 Log.e(TAG,"setando: " + obj.getAtivo());
@@ -92,17 +99,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
             }
         });
-        /*((CheckBox) viewHolder.itemView.findViewById(R.id.checkBox_ativo)).setOnCheckedChangeListener((compoundButton, b) -> {
-            ItemList.get(i).setAtivo(b);
-            Log.e(TAG,"setando: " + obj.getProduto().getDesc());
-            Log.e(TAG,"b: " + b);
-            Log.e(TAG,"setando: " + obj.getAtivo());
-            if(ItemFragment.OcultarAtivo && b){
-                ItemListFilter.remove(obj);
-                Log.e(TAG,"ItemList.remove(obj) " + obj.getId_lista());
-                notifyDataSetChanged();
-            }
-        });*/
+
     }
 
     @Override

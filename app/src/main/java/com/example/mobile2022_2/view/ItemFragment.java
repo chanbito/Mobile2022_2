@@ -36,6 +36,7 @@ public class ItemFragment extends Fragment {
     public static Lista ListaSelecionada;
     public static boolean OcultarAtivo;
     public List<Item> ListaFinal;
+    private ItemsAdapter ad;
 
     private FragmentItemsBinding binding;
 
@@ -53,20 +54,22 @@ public class ItemFragment extends Fragment {
 
         ProdutoRepository rep = ProdutoRepository.getInstance(this.getContext());
         ItemRepository repo = ItemRepository.getInstance(this.getContext());
+        ListaRepository repoLista = ListaRepository.getInstance(this.getContext());
 
 
         OcultarAtivo = false;
 
         try {
             Log.e(TAG,"getArgs: " + getArguments());
-            Log.e(TAG,"OLHA AQUI O BUG Q TU N ARRUMOU");
-            if(!getArguments().isEmpty()){
-                Log.e(TAG,"getArgs: " + getArguments());
+            if(getArguments().getBoolean("novaLista")) {
+                ListaSelecionada = new Lista(-1,"Nova Lista", Calendar.getInstance().getTime(),true);
+            }else{
                 ListaSelecionada = getArguments().getParcelable("Lista");
             }
+
         }catch (Exception e){
-            if(ListaSelecionada != null){
-                ListaSelecionada = new Lista(-1,"Nova Lista", Calendar.getInstance().getTime(),true,null);
+            if(ListaSelecionada == null){
+                ListaSelecionada = new Lista(-1,"Nova Lista", Calendar.getInstance().getTime(),true);
             }
         }
 
@@ -85,10 +88,11 @@ public class ItemFragment extends Fragment {
 
         Log.e(TAG,"Liastas: " + ListaFinal.size());
 
-
-
-        ItemsAdapter ad = new ItemsAdapter(ListaFinal);
-        binding.RCItem.setAdapter(ad);
+        ad = null;
+        if(ListaFinal.size() > 0) {
+            ad = new ItemsAdapter(ListaFinal,ItemFragment.this.getContext());
+            binding.RCItem.setAdapter(ad);
+        }
         LinearLayoutManager llm  = new LinearLayoutManager(this.getContext());
         binding.RCItem.setLayoutManager(llm);
 
@@ -98,7 +102,8 @@ public class ItemFragment extends Fragment {
                 binding.OcultarMarcadosButton.setText(R.string.Mostrar_Marcado);
             else
                 binding.OcultarMarcadosButton.setText(R.string.Ocultar_Marcado);
-            ad.filter(OcultarAtivo);
+            if(ad != null)
+                ad.filter(OcultarAtivo);
 
         });
 
@@ -106,11 +111,12 @@ public class ItemFragment extends Fragment {
             if(ListaSelecionada.getId() == -1)
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Deseja Criar uma lista com o nome " + ListaSelecionada.getDesc() + " ?")
+                builder.setMessage("Deseja Criar uma lista com o nome " + binding.editTextListName.getText().toString() + " ?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                ListaRepository lrep = new ListaRepository(ItemFragment.this.getContext());
-                                lrep.addLista(ListaSelecionada);
+
+                                ListaSelecionada.setDesc(binding.editTextListName.getText().toString());
+                                repoLista.addLista(ListaSelecionada);
                                 NavHostFragment.findNavController(ItemFragment.this)
                                         .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
                             }
@@ -133,11 +139,12 @@ public class ItemFragment extends Fragment {
             public void onClick(View view) {
                 if(binding.EditButton.getText() == "Save"){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Deseja Salvar a lista com o nome " + ListaSelecionada.getDesc() + " ?")
+                    builder.setMessage("Deseja Salvar a lista com o nome " + binding.editTextListName.getText().toString() + " ?")
                             .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    ListaRepository lrep = new ListaRepository(ItemFragment.this.getContext());
-                                    lrep.updateLista(ListaSelecionada);
+
+                                    ListaSelecionada.setDesc(binding.editTextListName.getText().toString());
+                                    repoLista.updateLista(ListaSelecionada);
                                     //NavHostFragment.findNavController(ItemFragment.this)
                                       //      .navigate(R.id.action_Item_Fragment_to_itemcadastroFragment);
                                     SetListEditMode(false);
@@ -156,9 +163,14 @@ public class ItemFragment extends Fragment {
         });
 
         binding.finalButton.setOnClickListener(view13 -> {
+            if(ListaFinal.isEmpty()){
+                ListaSelecionada.setAtivo(false);
+                repoLista.updateLista(ListaSelecionada);
+            }
             int count = 0;
             for (Item i :
                     ListaFinal) {
+                if(i!= null)
                 if(!i.getAtivo()){
                     count++;
                 }
@@ -177,6 +189,7 @@ public class ItemFragment extends Fragment {
                                     }
                                 }
                                 ListaSelecionada.setAtivo(false);
+                                repoLista.updateLista(ListaSelecionada);
                                 NavHostFragment.findNavController(ItemFragment.this).navigate(
                                         R.id.action_Item_Fragment_to_ListFragment
                                 );
@@ -191,6 +204,7 @@ public class ItemFragment extends Fragment {
                 builder.create().show();
             }else{
                 ListaSelecionada.setAtivo(false);
+                repoLista.updateLista(ListaSelecionada);
                 NavHostFragment.findNavController(ItemFragment.this).navigate(
                         R.id.action_Item_Fragment_to_ListFragment
                 );

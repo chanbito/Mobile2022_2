@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.mobile2022_2.Models.Lista;
 import com.example.mobile2022_2.R;
+import com.example.mobile2022_2.Repository.ListaRepository;
 import com.example.mobile2022_2.view.ListFragment;
 
 import java.util.Calendar;
@@ -20,10 +21,14 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = "ListAdapter";
     private final Fragment fragment;
     private List<Lista> listaList;
+    private ListaRepository repo;
+
+
     public ListAdapter(
             List<Lista> listaList, Fragment fragment) {
         this.listaList = listaList;
         this.fragment = fragment;
+        repo = ListaRepository.getInstance(fragment.getContext());
     }
 
     @NonNull
@@ -38,14 +43,21 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         Lista obj = listaList.get(i);
-        viewHolder.itemView.setOnClickListener(new ClickItemListener(obj,fragment));
-        Log.e(TAG,obj.getDesc());
-        TextView tv1 = viewHolder.itemView.findViewById(R.id.tituloTextView);
-        TextView tv2 = viewHolder.itemView.findViewById(R.id.checkedTextView);
-        TextView tv3 = viewHolder.itemView.findViewById(R.id.totalTextView);
-        tv1.setText(obj.getDesc());
-        tv2.setText(""+obj.GetItensUnchecked());
-        tv3.setText(""+obj.GetItensSize());
+        if(obj != null){
+            viewHolder.itemView.setOnClickListener(new ClickItemListener(obj,fragment));
+            Log.e(TAG,obj.getDesc());
+            TextView tv1 = viewHolder.itemView.findViewById(R.id.tituloTextView);
+            TextView tv2 = viewHolder.itemView.findViewById(R.id.checkedTextView);
+            TextView tv3 = viewHolder.itemView.findViewById(R.id.totalTextView);
+            tv1.setText(obj.getDesc());
+            tv2.setText(""+  repo.GetItensUnchecked(obj.getId()));
+            tv3.setText(""+repo.GetItensSize(obj.getId()));
+        }else{
+            ((TextView)viewHolder.itemView.findViewById(R.id.tituloTextView)).setText("");
+            ((TextView)viewHolder.itemView.findViewById(R.id.checkedTextView)).setText("");
+            ((TextView)viewHolder.itemView.findViewById(R.id.totalTextView)).setText("");
+            ((TextView)viewHolder.itemView.findViewById(R.id.barraTextView)).setText("");
+        }
 
     }
 

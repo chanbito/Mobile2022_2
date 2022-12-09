@@ -1,5 +1,6 @@
 package com.example.mobile2022_2.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -61,8 +62,8 @@ public class ListFragment extends Fragment {
         binding.NovoButton.setOnClickListener(
                 new ClickItemListener(
                         null,
-                        ListFragment.this) //new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null
-
+                        ListFragment.this,
+                        true)
              );
     }
     @Override

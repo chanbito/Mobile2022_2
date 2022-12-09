@@ -5,11 +5,12 @@ import android.os.Parcelable;
 import android.util.Log;
 
 public class Item implements Parcelable {
-    private int quantidade;
     private int id;
+    private int quantidade;
     private int id_lista;
     private boolean ativo;
     private String medida;
+
     private Produto produto;
 
     public Item(int id, boolean ativo, String medida, Produto produto,int id_lista, int qtd) {

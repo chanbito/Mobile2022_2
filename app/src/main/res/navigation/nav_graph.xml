@@ -11,9 +11,6 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_items">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
             android:id="@+id/action_Item_Fragment_to_itemcadastroFragment"
             app:destination="@id/itemcadastroFragment" />
         <action

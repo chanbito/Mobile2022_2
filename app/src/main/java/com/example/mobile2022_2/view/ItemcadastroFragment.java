@@ -54,9 +54,13 @@ public class ItemcadastroFragment extends Fragment {
         ProdutoRepository rep = ProdutoRepository.getInstance(this.getContext());
         ArrayList<String> sugest = new ArrayList<>();
 
-        for (Produto p :
-                rep.getProdutos()) {
-            sugest.add(p.getDesc());
+        try{
+            for (Produto p :
+                    rep.getProdutos()) {
+                sugest.add(p.getDesc());
+            }
+        }catch (Exception e) {
+
         }
 
         final MatrixCursor c = getCursorSearchView(sugest);
@@ -137,10 +141,13 @@ public class ItemcadastroFragment extends Fragment {
                 String input = binding.SearchView.getQuery().toString();
                 Log.e(TAG,"input: " + input);
                 produtoSelecionado = null;
+
                 for (Produto p :
                         rep.getProdutos()) {
-                    if (p.getDesc().equalsIgnoreCase(input)) {
-                        produtoSelecionado = p;
+                    if (p != null) {
+                        if (p.getDesc().equalsIgnoreCase(input)) {
+                            produtoSelecionado = p;
+                        }
                     }
                 }
 
@@ -151,15 +158,16 @@ public class ItemcadastroFragment extends Fragment {
                 }
             }
         });
-        binding.CancelarButton.setOnClickListener(
-                new ClickItemListener(
-                        ItemFragment.ListaSelecionada,
-                        ItemcadastroFragment.this) //new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null
-
-                );
-
-                //view1 -> NavHostFragment.findNavController(ItemcadastroFragment.this)
-                //.navigate(R.id.action_itemcadastroFragment_to_Item_Fragment));
+        binding.CancelarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundl = new Bundle();
+                bundl.putParcelable("Lista", ItemFragment.ListaSelecionada);
+                NavHostFragment.findNavController(ItemcadastroFragment.this)
+                      .navigate(R.id.action_itemcadastroFragment_to_Item_Fragment, bundl
+                      );
+            }
+        });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ItemcadastroFragment.this.getContext(),
                 R.array.MetricasArray, android.R.layout.simple_spinner_item);
@@ -178,16 +186,10 @@ public class ItemcadastroFragment extends Fragment {
                 irep.addItem(binding.MetricaSpinner.getSelectedItem().toString(),produtoSelecionado.getId(),
                         ItemFragment.ListaSelecionada.getId(),Integer.parseInt(binding.QTDeditTextNumber.getText().toString()));
 
-
-                new ClickItemListener(
-                        ItemFragment.ListaSelecionada,
-                        ItemcadastroFragment.this //new Lista(-1,"Nova", Calendar.getInstance().getTime(),true,null
-                );
-
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("Lista", ItemFragment.ListaSelecionada);
                 NavHostFragment.findNavController(ItemcadastroFragment.this)
-                        .navigate(R.id.action_ListFragment_to_ItemFragment, bundle);
+                        .navigate(R.id.action_itemcadastroFragment_to_Item_Fragment, bundle);
             }
         });
     }
